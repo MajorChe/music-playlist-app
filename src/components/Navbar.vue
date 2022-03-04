@@ -5,6 +5,7 @@
       <h1><router-link :to="{ name: 'Home' }">PlayList-App</router-link></h1>
       <div class="links">
         <div v-if="user">
+          <router-link class="btn" :to="{ name: 'CreatePlaylist' }">Create Playlist</router-link>
           <button @click="handleLogout">Logout</button>
         </div>
         <div v-else>
