@@ -1,17 +1,29 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/Home.vue";
 import Login from "../views/auth/Login.vue";
+import Signup from "../views/auth/Signup.vue";
+import CreatePlaylist from "@/views/playlist/CreatePlaylist.vue"
 
 const routes = [
   {
     path: "/",
-    name: "home",
+    name: "Home",
     component: Home,
   },
   {
     path: "/login",
-    name: "login",
+    name: "Login",
     component: Login,
+  },
+  {
+    path: "/signup",
+    name: "Signup",
+    component: Signup,
+  },
+  {
+    path: "/playlists/create",
+    name: "CreatePlaylist",
+    component: CreatePlaylist,
   },
 ];
 
