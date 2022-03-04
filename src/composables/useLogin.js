@@ -1,24 +1,25 @@
-import { ref } from 'vue'
-import { projectAuth } from '../firebase/config'
+import { ref } from "vue";
+import { projectAuth } from "../firebase/config";
 
-const error = ref(null)
-
+const error = ref(null);
+const isPending = ref(false) //added to show loading button while request is being sent back from the server
 const login = async (email, password) => {
-  error.value = null
-
+  error.value = null;
+  isPending.value = true
   try {
-    const res = await projectAuth.signInWithEmailAndPassword(email, password)
-    error.value = null
-    return res
+    const res = await projectAuth.signInWithEmailAndPassword(email, password);
+    error.value = null;
+    isPending.value = false
+    return res;
+  } catch (err) {
+    console.log(err.message);
+    error.value = "Incorrect login credentials";
+    isPending.value = false
   }
-  catch(err) {
-    console.log(err.message)
-    error.value = 'Incorrect login credentials'
-  }
-}
+};
 
 const useLogin = () => {
-  return { error, login }
-}
+  return { error, login, isPending };
+};
 
-export default useLogin
+export default useLogin;
