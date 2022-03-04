@@ -25,7 +25,7 @@ const getCollection = (collection) => {
     documents.value = null
     error.value = 'could not fetch the data'
   })
-
+  // onInvalidate will unmount the component to prevent further unecessary requests to the surver
   watchEffect((onInvalidate) => {
     onInvalidate(() => unsub());
   });
