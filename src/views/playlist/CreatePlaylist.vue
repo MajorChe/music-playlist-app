@@ -1,31 +1,35 @@
 <template>
   <form @submit.prevent="handleCreate">
-    <input type="text" v-model="title" placeholder="Title" required>
-    <textarea v-model="description" required placeholder="Enter Playlist description..."></textarea>
+    <input type="text" v-model="title" placeholder="Title" required />
+    <textarea
+      v-model="description"
+      required
+      placeholder="Enter Playlist description..."
+    ></textarea>
     <label>Upload playlist image</label>
-    <input type="file" accept="image/*" @change="handleFile">
+    <input type="file" accept="image/*" @change="handleFile" />
     <button v-if="!isPending">Create</button>
     <button v-if="isPending" disabled>Creating...</button>
   </form>
 </template>
 
 <script>
-import { ref } from 'vue';
-import useStoage from '@/composables/useStorage';
-import useCollection from '@/composables/useCollection';
-import getUser from '@/composables/getUser';
-import { timestamp } from "@/firebase/config"
+import { ref } from "vue";
+import useStoage from "@/composables/useStorage";
+import useCollection from "@/composables/useCollection";
+import getUser from "@/composables/getUser";
+import { timestamp } from "@/firebase/config";
 
 export default {
   setup() {
     const { url, filePath, uploadImage } = useStoage();
-    const { error, addDoc, isPending } = useCollection('playlists');
+    const { error, addDoc, isPending } = useCollection("playlists");
     const { user } = getUser();
-    const title = ref('');
-    const description = ref('');
-    const file = ref(null)
-    const handleCreate = async() => {
-      isPending.value = true
+    const title = ref("");
+    const description = ref("");
+    const file = ref(null);
+    const handleCreate = async () => {
+      isPending.value = true;
       if (file.value) {
         await uploadImage(file.value);
         await addDoc({
@@ -36,39 +40,39 @@ export default {
           coverUrl: url.value,
           filePath: filePath.value,
           songs: [],
-          createdAt: timestamp()
-        })
-        if(!error.value) {
-          isPending.value = false
-          console.log("playlist added")
+          createdAt: timestamp(),
+        });
+        isPending.value = false;
+        if (!error.value) {
+          console.log("playlist added");
         }
-        console.log("image uploaded",url.value)
+        console.log("image uploaded", url.value);
       }
-    }
+    };
     const handleFile = (e) => {
-      const uploadedFile = e.target.files[0]
-      if(uploadedFile) {
-        file.value = uploadedFile
+      const uploadedFile = e.target.files[0];
+      if (uploadedFile) {
+        file.value = uploadedFile;
       } else {
-        file.value = null
+        file.value = null;
       }
-    }
-    return { title, description, handleCreate, handleFile, isPending }
-  }
-}
+    };
+    return { title, description, handleCreate, handleFile, isPending };
+  },
+};
 </script>
 
 <style>
-  input[type="file"] {
-    border: 0;
-    padding: 0;
-  }
-  label {
-    font-size: 12px;
-    display: block;
-    margin-top: 30px;
-  }
-  button {
-    margin-top: 20px;
-  }
+input[type="file"] {
+  border: 0;
+  padding: 0;
+}
+label {
+  font-size: 12px;
+  display: block;
+  margin-top: 30px;
+}
+button {
+  margin-top: 20px;
+}
 </style>
