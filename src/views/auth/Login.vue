@@ -1,6 +1,6 @@
 <template>
-  <form @submit.prevent="handleSubmit">
-    <h3>Login Form</h3>
+  <form @submit.prevent="handleLogin">
+    <h3>LOGIN</h3>
     <div v-if="error" class="error">{{ error }}</div>
     <input type="email" placeholder="Email" v-model="email" required />
     <input type="password" placeholder="Password" v-model="password" required />
@@ -17,13 +17,13 @@ export default {
     const { error, login, isPending } = useLogin();
     const email = ref("");
     const password = ref("");
-    const handleSubmit = async() => {
+    const handleLogin = async () => {
       const res = await login(email.value, password.value);
-      if(!error.value) {
-        console.log("user logged in")
+      if (!error.value) {
+        console.log("user logged in");
       }
     };
-    return { email, password, handleSubmit, error, isPending };
+    return { email, password, handleLogin, error, isPending };
   },
 };
 </script>
