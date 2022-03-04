@@ -4,22 +4,44 @@
     <textarea v-model="description" required placeholder="Enter Playlist description..."></textarea>
     <label>Upload playlist image</label>
     <input type="file" accept="image/*" @change="handleFile">
-    <button>Create</button>
+    <button v-if="!isPending">Create</button>
+    <button v-if="isPending" disabled>Creating...</button>
   </form>
 </template>
 
 <script>
 import { ref } from 'vue';
 import useStoage from '@/composables/useStorage';
+import useCollection from '@/composables/useCollection';
+import getUser from '@/composables/getUser';
+import { timestamp } from "@/firebase/config"
+
 export default {
   setup() {
     const { url, filePath, uploadImage } = useStoage();
+    const { error, addDoc, isPending } = useCollection('playlists');
+    const { user } = getUser();
     const title = ref('');
     const description = ref('');
     const file = ref(null)
     const handleCreate = async() => {
+      isPending.value = true
       if (file.value) {
         await uploadImage(file.value);
+        await addDoc({
+          title: title.value,
+          description: description.value,
+          userid: user.value.uid,
+          userName: user.value.displayName,
+          coverUrl: url.value,
+          filePath: filePath.value,
+          songs: [],
+          createdAt: timestamp()
+        })
+        if(!error.value) {
+          isPending.value = false
+          console.log("playlist added")
+        }
         console.log("image uploaded",url.value)
       }
     }
@@ -31,7 +53,7 @@ export default {
         file.value = null
       }
     }
-    return { title, description, handleCreate, handleFile }
+    return { title, description, handleCreate, handleFile, isPending }
   }
 }
 </script>
