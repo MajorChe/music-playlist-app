@@ -6,6 +6,24 @@ const useDocument = (collection, id) => {
   const isPending = ref(null);
 
   let docRef = projectFirestore.collection(collection).doc(id);
+  //updating a document
+  const updateDoc = async (updates) => {
+    isPending.value = true;
+    error.value = null;
+
+    try {
+      const res = await docRef.update(updates);
+      isPending.value = false;
+      return res;
+    } catch (err) {
+      console.log(err.message);
+      isPending.value = false;
+      error.value = "Could not update the document";
+    }
+  };
+
+  // deleteing a document
+
   const deleteDoc = async () => {
     isPending.value = true;
     error.value = null;
@@ -14,14 +32,13 @@ const useDocument = (collection, id) => {
       const res = await docRef.delete();
       isPending.value = false;
       return res;
-
     } catch (err) {
       console.log(err.message);
-      isPending.value= false;
-      error.value = "Could not delete the document"
+      isPending.value = false;
+      error.value = "Could not delete the document";
     }
   };
-  return { error, isPending, deleteDoc}
+  return { error, isPending, deleteDoc, updateDoc };
 };
 
 export default useDocument;

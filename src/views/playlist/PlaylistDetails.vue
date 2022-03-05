@@ -14,6 +14,7 @@
     <!-- song details -->
     <div class="song-list">
       <p>Song list here</p>
+      <AddSong v-if="ownership" :playlist="playlist"/>
     </div>
   </div>
 </template>
@@ -22,11 +23,13 @@
 import getDocument from "@/composables/getDocument";
 import useDocument from "@/composables/useDocument";
 import useStorage from "@/composables/useStorage";
+import AddSong from "@/components/AddSong.vue"
 import { useRouter} from "vue-router";
 import { computed } from "vue";
 import getUser from "@/composables/getUser";
 export default {
   props: ["id"],
+  components: { AddSong },
   setup(props) {
     const { deleteImage } = useStorage();
     const { user } = getUser();
