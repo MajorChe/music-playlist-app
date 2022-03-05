@@ -5,7 +5,13 @@
       <h1><router-link :to="{ name: 'Home' }">PlayList-App</router-link></h1>
       <div class="links">
         <div v-if="user">
-          <router-link class="btn" :to="{ name: 'CreatePlaylist' }">Create Playlist</router-link>
+          <router-link class="btn" :to="{ name: 'UserPlaylists' }"
+            >My Playlists</router-link
+          >
+          <router-link class="btn" :to="{ name: 'CreatePlaylist' }"
+            >Create Playlist</router-link
+          >
+          <span>Hi, {{user.displayName}}</span>
           <button @click="handleLogout">Logout</button>
         </div>
         <div v-else>
@@ -19,8 +25,8 @@
 
 <script>
 import useLogout from "@/composables/useLogout";
-import { useRouter } from 'vue-router';
-import getUser from "@/composables/getUser"
+import { useRouter } from "vue-router";
+import getUser from "@/composables/getUser";
 export default {
   setup() {
     const { user } = getUser();
@@ -28,9 +34,8 @@ export default {
     const router = useRouter();
     const handleLogout = async () => {
       await logout();
-      console.log("user Logged out")
-      router.push({name: 'Login'})
-      
+      console.log("user Logged out");
+      router.push({ name: "Login" });
     };
     return { handleLogout, user };
   },
@@ -63,4 +68,11 @@ button {
   margin-left: 16px;
   font-size: 14px;
 }
+span {
+    font-size: 14px;
+    display: inline-block;
+    margin-left: 16px;
+    padding-left: 16px;
+    border-left: 1px solid #eee;
+  }
 </style>

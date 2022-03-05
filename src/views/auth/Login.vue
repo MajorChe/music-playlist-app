@@ -22,7 +22,7 @@ export default {
     const handleLogin = async () => {
       const res = await login(email.value, password.value);
       if (!error.value) {
-        router.push({ name: "Home" });
+        router.push({ name: "UserPlaylists" });
         console.log("user logged in");
       }
     };
