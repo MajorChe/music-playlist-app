@@ -2,11 +2,13 @@
   <div class="add-song">
     <button v-if="!showForm" @click="showForm = true">Add Songs</button>
     <form v-if="showForm" @submit.prevent="handleSubmit">
-      <h4>Add a new song</h4>
+      <div class="add-song-header">
+        <h4>Add a new song</h4>
+        <span class="material-icons" @click="showForm = false"> close </span>
+      </div>
       <input type="text" placeholder="Song title" v-model="title" required />
       <input type="text" placeholder="Artist" v-model="artist" required />
       <button>Add</button>
-      <button @click="showForm = false">Cancel</button>
     </form>
   </div>
 </template>
@@ -17,7 +19,7 @@ import useDocument from "@/composables/useDocument";
 export default {
   props: ["playlist"],
   setup(props) {
-    const { updateDoc } = useDocument("playlists",props.playlist.id);
+    const { updateDoc } = useDocument("playlists", props.playlist.id);
     const title = ref("");
     const artist = ref("");
     const showForm = ref(false);
@@ -27,6 +29,7 @@ export default {
         artist: artist.value,
         id: Math.floor(Math.random() * 100000000),
       };
+      showForm.value = false;
       await updateDoc({
         songs: [...props.playlist.songs, newSong],
       });
@@ -42,6 +45,13 @@ export default {
 .add-song {
   text-align: center;
   margin-top: 40px;
+}
+.add-song-header {
+  display: flex;
+  justify-content: space-between;
+}
+.add-song-header span {
+  cursor: pointer;
 }
 form {
   max-width: 100%;
