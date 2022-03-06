@@ -60,4 +60,9 @@ form {
 button {
   margin-right: 10px;
 }
+@media only screen and (max-width: 600px) {
+  .add-song {
+    margin-top: 0px;
+  }
+}
 </style>

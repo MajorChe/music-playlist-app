@@ -1,5 +1,6 @@
 <template>
   <div class="error" v-if="error">{{ error }}</div>
+  <h1>Playlist Details</h1>
   <div class="playlist-details" v-if="playlist">
     <!-- playlist information -->
     <div class="playlist-info">
@@ -20,7 +21,9 @@
         <div v-for="song in playlist.songs" :key="song.id" class="single-song">
           <div class="details">
             <h3>{{ song.title }}</h3>
-            <p>{{ song.artist }}</p>
+            <p>
+              <i>{{ song.artist }}</i>
+            </p>
           </div>
           <button v-if="ownership" @click="handleDeleteSong(song.id)">
             delete
@@ -77,9 +80,10 @@ export default {
 
 <style>
 .playlist-details {
-  display: grid;
-  grid-template-columns: 1fr 2fr;
+  margin-top: 20px;
+  display: flex;
   gap: 80px;
+  flex-wrap: wrap;
 }
 .cover {
   overflow: hidden;
@@ -112,14 +116,49 @@ export default {
   color: #999;
 }
 .description {
-  text-align: left;
+  text-align: center;
 }
 .single-song {
   padding: 10px 0;
   display: flex;
+  gap: 600px;
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px dashed var(--secondary);
   margin-bottom: 20px;
+}
+
+@media only screen and (max-width: 600px) {
+  .playlist-details {
+    margin-top: 20px;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  h1 {
+    text-align: center;
+  }
+  .single-song {
+    display: flex;
+    gap: 150px;
+  }
+  .cover {
+    overflow: hidden;
+    border-radius: 20px;
+    position: relative;
+    padding: 100px;
+  }
+  .cover img {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 60px;
+    width: 60px;
+  }
+  .playlist-info p {
+    margin-bottom: 0px;
+  }
 }
 </style>

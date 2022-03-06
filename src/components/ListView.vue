@@ -55,4 +55,13 @@ img {
 .song-number {
   margin-left: auto;
 }
+@media only screen and (max-width: 600px) {
+  .thumbnail {
+    max-width: 60px;
+    max-height: 60px;
+  }
+  .info {
+    font-size: 12px;
+  }
+}
 </style>

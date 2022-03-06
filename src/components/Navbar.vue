@@ -1,18 +1,22 @@
 <template>
   <div class="navbar">
     <nav>
-      <img src="@/assets/logo.png" />
+      <router-link :to="{ name: 'Home' }"><img src="@/assets/logo.png" /></router-link>
       <h1><router-link :to="{ name: 'Home' }">PlayList-App</router-link></h1>
       <div class="links">
-        <div v-if="user">
-          <router-link class="btn" :to="{ name: 'UserPlaylists' }"
-            >My Playlists</router-link
-          >
-          <router-link class="btn" :to="{ name: 'CreatePlaylist' }"
-            >Create Playlist</router-link
-          >
-          <span>Hi, {{user.displayName}}</span>
-          <button @click="handleLogout">Logout</button>
+        <div v-if="user" class="right-nav">
+          <div class="right-nav-links">
+            <router-link class="btn" :to="{ name: 'UserPlaylists' }"
+              >My Playlists</router-link
+            >
+            <router-link class="btn" :to="{ name: 'CreatePlaylist' }"
+              >Create Playlist</router-link
+            >
+          </div>
+          <div class="right-nav-buttons">
+            <span>Hi, {{ user.displayName }}</span>
+            <button @click="handleLogout">Logout</button>
+          </div>
         </div>
         <div v-else>
           <router-link class="btn" :to="{ name: 'Signup' }">Signup</router-link>
@@ -45,7 +49,7 @@ export default {
 <style scoped>
 .navbar {
   padding: 16px 10px;
-  margin-bottom: 60px;
+  margin-bottom: 30px;
   background: white;
 }
 nav {
@@ -63,16 +67,44 @@ nav h1 {
 nav .links {
   margin-left: auto;
 }
+.right-nav {
+  display: flex;
+  align-items: center;
+}
+.right-nav-buttons button {
+  margin-top: 0px;
+}
 nav .links a,
 button {
   margin-left: 16px;
   font-size: 14px;
 }
 span {
-    font-size: 14px;
-    display: inline-block;
-    margin-left: 16px;
-    padding-left: 16px;
-    border-left: 1px solid #eee;
+  font-size: 14px;
+  display: inline-block;
+  margin-left: 16px;
+  padding-left: 16px;
+  border-left: 1px solid #eee;
+}
+@media only screen and (max-width: 600px) {
+  nav {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
   }
+  .right-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  nav .links {
+    margin-left: 0px;
+  }
+  .right-nav-links {
+    display: flex;
+    flex-direction: row;
+  }
+}
 </style>
