@@ -3,7 +3,7 @@
   <div class="content">
     <router-view />
   </div>
-  <div class="footer"><p><b>Created by Charit</b></p></div>
+    <div class="footer"><p><b>Created by Charit</b></p></div>
 </template>
 
 <script>
@@ -19,9 +19,11 @@ export default {
   margin: 0 auto;
   max-width: 1200px;
   padding: 0 20px;
+  min-height: 80vh;
 }
 .footer {
-  position: absolute;
+  /* position: fixed; */
+  margin-top: 20px;
   bottom: 0;
   width: 100%;
   height: 60px;

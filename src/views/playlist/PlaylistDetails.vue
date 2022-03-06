@@ -83,7 +83,7 @@ export default {
   margin-top: 20px;
   display: flex;
   gap: 80px;
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
 }
 .cover {
   overflow: hidden;
@@ -108,9 +108,6 @@ export default {
   text-transform: capitalize;
   font-size: 28px;
   margin-top: 20px;
-}
-.playlist-info p {
-  margin-bottom: 20px;
 }
 .username {
   color: #999;

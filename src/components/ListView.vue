@@ -45,8 +45,8 @@ export default {
   border-radius: 10px;
 }
 img {
-  max-width: 150%;
-  max-height: 150%;
+  max-width: 100%;
+  max-height: 100%;
   display: block;
 }
 .info {
